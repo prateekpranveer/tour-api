@@ -9,10 +9,6 @@ const categorySchema = new mongoose.Schema({
     slug: {
         type: String,
         required: true
-    },
-    items: {
-        type: [place],
-        required: true
     }
 })
 
