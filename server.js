@@ -8,6 +8,8 @@ const app = express();
 app.use(express.json())
 app.use(cors());
 
+const port = process.env.PORT || 5000;
+
 
 // Import Routes
 const usersRoute = require('./routes/userRoute')
@@ -18,13 +20,17 @@ app.use('/user', usersRoute);
 app.use('/place', placeRoute);
 app.use('/category', categoryRoute);
 
+app.get('/', (req, res) => {
+    res.send({message: "Hello World"})
+})
+
 app.use(bodyParser.json());
 
 // connect to DB
 mongoose.connect(process.env.MONGO_URL).catch(error => console.log(error))
 
 
-app.listen(4000, function(err){
+app.listen(port, function(err){
     if (err) console.log("Error in server setup")
-    console.log("Server listening on Port", process.env.PORT||5001);
+    console.log("Server listening on Port", port);
 })
