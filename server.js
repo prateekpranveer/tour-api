@@ -20,9 +20,6 @@ app.use('/user', usersRoute);
 app.use('/place', placeRoute);
 app.use('/category', categoryRoute);
 
-app.get('/', (req, res) => {
-    res.send({message: "Hello World"})
-})
 
 app.use(bodyParser.json());
 
