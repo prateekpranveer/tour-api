@@ -31,7 +31,11 @@ const userSchema = new mongoose.Schema ({
     phone: {
         type: Number,
         required: true,
-    }
+    },
+    contribution: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'contribution'
+    }]
     
 })
 

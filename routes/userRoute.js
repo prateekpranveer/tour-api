@@ -1,6 +1,7 @@
 const express = require('express')
 const User = require('../schemas/user')
 const jwt = require('jsonwebtoken')
+const secretKey = 'xtrasecret'
 
 
 const router = express.Router();
@@ -70,15 +71,22 @@ router.post('/login', async (req, res) => {
       {
         userId: User._id
       },
-      'secret',
-      {
-        expiresIn: '1h'
-      }
+      secretKey
     )
     res.send({token});
 
   } catch(err) {
     res.status(400).send(err.message)
+  }
+})
+
+router.get('/get-all-contribution/:id', async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const user = await User.findOne({_id:userId})
+    console.log(user)
+  } catch(err) {
+    
   }
 })
 
