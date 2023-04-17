@@ -32,8 +32,7 @@ router.get('/search', async (req, res) => {
 })
 
 router.get('/:cat/:slug', async(req, res) => {
-    const {cat, slug} = req.params;
-    console.log(cat,slug)
+    const {slug} = req.params;
     try {
         const placebySlug = await Place.findOne({slug:slug});
         res.status(200).json(placebySlug);
@@ -45,7 +44,6 @@ router.get('/:cat/:slug', async(req, res) => {
 
 router.get('/:catId', async (req, res) => {
     const { catId } = req.params
-    console.log(catId)
     try {
         const result = await Place.find({category: catId});
         res.status(200).json(result);
@@ -57,7 +55,6 @@ router.get('/:catId', async (req, res) => {
 router.post('/create', async (req, res) => {
     try {
         const { name, address, slug, desc, category, checkPoints } = req.body;
-        console.log(checkPoints)
         const place = new Place({
             name: name,
             adress: address,
