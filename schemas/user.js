@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const userSchema = new mongoose.Schema ({
+const userSchema = new mongoose.Schema({
     name: {
         type: String,
     },
@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema ({
         required: true,
     },
     userName: {
-        type: String, 
+        type: String,
         required: true,
     },
     userLevel: {
@@ -21,6 +21,19 @@ const userSchema = new mongoose.Schema ({
         required: true,
         default: 3
     },
+    contributions: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'contribution'
+            }
+        ],
+    writeUps: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'place'
+            }
+        ]
+    ,
     rating: {
         type: Number,
     },
@@ -32,11 +45,7 @@ const userSchema = new mongoose.Schema ({
         type: Number,
         required: true,
     },
-    contribution: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'contribution'
-    }]
     
 })
 
-module.exports = new mongoose.model ('user', userSchema);
+module.exports = new mongoose.model('user', userSchema);

@@ -16,6 +16,10 @@ const contributionSchema = new mongoose.Schema({
     picked: {
         type: Boolean,
         required: true
+    },
+    pending: {
+        type: Boolean,
+        required: true
     }
 })
 

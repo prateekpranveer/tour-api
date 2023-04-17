@@ -9,6 +9,11 @@ const placeSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    author: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user'
+    },
+
     slug: {
         type: String,
         required: true
@@ -32,4 +37,5 @@ const placeSchema = new mongoose.Schema({
     }
 })
 
+placeSchema.index({name: "text"})
 module.exports = new mongoose.model ('place', placeSchema);
