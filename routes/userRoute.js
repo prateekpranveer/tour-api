@@ -84,7 +84,7 @@ router.get('/get-all-contribution/:id', async (req, res) => {
   try {
     const userId = req.params.id;
     const user = await User.findOne({_id:userId})
-    console.log(user)
+    
   } catch(err) {
     
   }

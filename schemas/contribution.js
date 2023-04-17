@@ -1,25 +1,28 @@
 const mongoose = require('mongoose')
 
 const contributionSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true
-    },
     desc: {
         type: String,
         required: true
     },
+    author: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user'
+    },
     accomplished: {
         type: Boolean,
-        required: true
+        required: true,
+        default: false
     },
     picked: {
         type: Boolean,
-        required: true
+        required: true,
+        default: false
     },
     pending: {
         type: Boolean,
-        required: true
+        required: true,
+        default: false
     }
 })
 

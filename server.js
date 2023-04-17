@@ -14,9 +14,11 @@ const port = process.env.PORT || 5000;
 // Import Routes
 const usersRoute = require('./routes/userRoute')
 const placeRoute = require('./routes/placeRoute')
+const categoryRoute = require('./routes/categoryRoute')
 
 app.use('/user', usersRoute);
 app.use('/place', placeRoute);
+app.use('/category', categoryRoute);
 
 
 app.use(bodyParser.json());

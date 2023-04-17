@@ -15,6 +15,7 @@ router.get('/all', async (req, res) => {
     }
 })
 
+
 router.get('/search', async (req, res) => {
     const { searchTerm } = req.query;
     try {
@@ -30,42 +31,40 @@ router.get('/search', async (req, res) => {
     }
 })
 
-router.get('/:slug', async(req, res) => {
-    const {slug} = req.params;
+router.get('/:cat/:slug', async(req, res) => {
+    const {cat, slug} = req.params;
+    console.log(cat,slug)
     try {
         const placebySlug = await Place.findOne({slug:slug});
-        console.log(placebySlug)
         res.status(200).json(placebySlug);
     } catch(err){
         res.status(400).send(err.message);
     }
 })
 
-router.get('/:id', async (req, res) => {
-    try {
-        const id = req.params.id;
-        const place = await Place.findOne({_id:id});
-        console.log(place)
-        res.status(200).json(place);
 
-    } catch (err) {
+router.get('/:catId', async (req, res) => {
+    const { catId } = req.params
+    console.log(catId)
+    try {
+        const result = await Place.find({category: catId});
+        res.status(200).json(result);
+    } catch(err) {
         res.status(400).send(err.message)
     }
 })
 
-
-
 router.post('/create', async (req, res) => {
     try {
-        const { name, address, slug, desc, category, Checkpoints } = req.body;
-        console.log(Checkpoints)
+        const { name, address, slug, desc, category, checkPoints } = req.body;
+        console.log(checkPoints)
         const place = new Place({
             name: name,
             adress: address,
             slug: slug,
             desc: desc,
             category: category,
-            checkPoints: Checkpoints
+            checkPoints: checkPoints
         })
         await place.save().then((data) => res.send(data)).catch((err) => res.send(err));
     } catch {
