@@ -1,5 +1,6 @@
 const express = require('express')
 const Place = require('../schemas/place')
+const verifyToken = require('../middlewares/verifyToken')
 
 const router = express.Router();
 
@@ -52,7 +53,7 @@ router.get('/:catId', async (req, res) => {
     }
 })
 
-router.post('/create', async (req, res) => {
+router.post('/create', verifyToken, async (req, res) => {
     try {
         const { name, address, slug, desc, category, checkPoints } = req.body;
         const place = new Place({

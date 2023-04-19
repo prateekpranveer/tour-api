@@ -18,7 +18,7 @@ function ValidateEmail(mail)
 // Gets all the users
 router.post('/register', async (req, res) => {
   try {
-    const { emailId, password, userName, userLevel, phone } = req.body;
+    const { name, emailId, password, userName, userLevel, phone } = req.body;
   // registration
   const userExists = await User.findOne({userName});
   if (userExists) {
@@ -37,9 +37,10 @@ router.post('/register', async (req, res) => {
     emailId: emailId,
     password: password,
     userName: userName,
-    rating: req.body.rating,
+    userLevel: 3,
     phone: phone
   })
+
   await user.save()
     .then(data => {
       res.send(data);
@@ -67,27 +68,19 @@ router.post('/login', async (req, res) => {
     if (password !== emailIDFound.password) {
       throw new Error('Invalid email or password')
     }
+    console.log(emailIDFound)
     const token = jwt.sign(
       {
         userId: User._id
       },
       secretKey
     )
-    res.send({token});
+    res.send({emailIDFound, token});
 
   } catch(err) {
     res.status(400).send(err.message)
   }
 })
 
-router.get('/get-all-contribution/:id', async (req, res) => {
-  try {
-    const userId = req.params.id;
-    const user = await User.findOne({_id:userId})
-    
-  } catch(err) {
-    
-  }
-})
 
 module.exports = router;
