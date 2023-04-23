@@ -18,8 +18,10 @@ function ValidateEmail(mail)
 // Gets all the users
 router.post('/register', async (req, res) => {
   try {
-    const { name, emailId, password, userName, userLevel, phone } = req.body;
+    const { name, emailId, password, confirmPassword, userName, phone} = req.body;
+    console.log(req.body)
   // registration
+  if (password!=confirmPassword) throw new Error('Password Mismatch')
   const userExists = await User.findOne({userName});
   if (userExists) {
     throw new Error ('UserName is taken');
@@ -33,7 +35,7 @@ router.post('/register', async (req, res) => {
   }
 
   const user = new User ({
-    name: req.body.name,
+    name: name,
     emailId: emailId,
     password: password,
     userName: userName,
@@ -68,7 +70,6 @@ router.post('/login', async (req, res) => {
     if (password !== emailIDFound.password) {
       throw new Error('Invalid email or password')
     }
-    console.log(emailIDFound)
     const token = jwt.sign(
       {
         userId: User._id
@@ -81,6 +82,12 @@ router.post('/login', async (req, res) => {
     res.status(400).send(err.message)
   }
 })
+
+
+router.get('/:id', async (req, res) => {
+  const userId = req.params.id
+  const user = await User.findById(userId).then((res) => console.log(res)).catch(res => console.log(res))
+}) 
 
 
 module.exports = router;

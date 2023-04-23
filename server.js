@@ -15,10 +15,12 @@ const port = process.env.PORT || 5000;
 const usersRoute = require('./routes/userRoute')
 const placeRoute = require('./routes/placeRoute')
 const categoryRoute = require('./routes/categoryRoute')
+const contRoute = require('./routes/conRoute')
 
 app.use('/user', usersRoute);
 app.use('/place', placeRoute);
 app.use('/category', categoryRoute);
+app.use('/contribution', contRoute);
 
 
 app.use(bodyParser.json());

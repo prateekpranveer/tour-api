@@ -19,7 +19,7 @@ const contributionSchema = new mongoose.Schema({
         required: true,
         default: false
     },
-    pending: {
+    Published: {
         type: Boolean,
         required: true,
         default: false
