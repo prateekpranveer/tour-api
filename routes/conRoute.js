@@ -9,6 +9,7 @@ const router = express.Router()
 router.get('/all', async (req, res) => {
     try {
         const allContribution = await Contribution.find();
+        console.log(allContribution)
        res.send(allContribution)
     } catch(err) {
         console.log(err)
@@ -64,7 +65,7 @@ router.put('/:user/pick/:article', async (req, res) => {
          _id: articleId
         },
         {
-            $set: { picked: true, author: userId }
+            $set: { picked: true, author: userId, authorName:userToBeModified.name }
         },  
     ).then(result => {
         res.send(result)
@@ -77,12 +78,13 @@ router.put('/:user/pick/:article', async (req, res) => {
 
 
 router.put('/:user/accomplish/:article', async (req, res) => {
+    const user = User.findById(req.params.user);
     try {
-        const userId = req.params.user;
+    const userId = req.params.user;
     const articleId = req.params.article;
     const POI = await Contribution.findById(articleId);
     if (POI.author!=userId) {
-        throw new Error (`This contribution is picked by ${POI.author}, only they can mark it accomplished`)
+        throw new Error (`This contribution is picked by ${POI.authorName}, only they can change the status`)
     }
     else {
         await Contribution.updateOne(
@@ -90,7 +92,7 @@ router.put('/:user/accomplish/:article', async (req, res) => {
                 _id: articleId
             },
             {
-                $set: { accomplished: true }
+                $set: { accomplished: true}
             },  
         ).then(result => {
             res.send(result)
